@@ -6,6 +6,12 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ListBuckets from "./ListBuckets"
 import ListObjects from "./ListObjects"
+const helpers = require("minio/dist/main/helpers")
+const { getVersionId, isArray } = helpers
+
+console.log("Is array::",isArray([]))
+console.log("Is getVersionId array::",getVersionId(""))
+
 
 export default function App() {
   return (

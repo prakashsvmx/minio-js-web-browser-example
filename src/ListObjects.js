@@ -5,6 +5,7 @@ import mc from "./mc";
 import createPutObjectModal from "./create-bucket/PutObjectModal"
 import {getFileIcon} from "./utils"
 import format from 'date-fns/format'
+import history from "./history";
 
 
 const ListObjects = () => {
@@ -28,6 +29,13 @@ const ListObjects = () => {
             await mc.removeObjects(bucketName, delObjIds)
         }
         await listObjectsOfBucket()
+    }
+
+    const copyObjToAnotherBucket = async(obj)=>{
+        const copyTargetBucket ="target-bucket"
+        const targetObjName =`copy-of${obj.name}`
+        await mc.copyObject(copyTargetBucket, targetObjName, `${bucketName}/${obj.name}`)
+        history.push(copyTargetBucket)
     }
 
     const listObjectsOfBucket = async () => {
@@ -198,6 +206,12 @@ const ListObjects = () => {
                                                    deleteObject(obj)
                                                }}>
                                                 Delete
+                                            </button>
+                                            <button rel="noopener noreferrer" className="ml-5 text-indigo-600 hover:text-indigo-900"
+                                               onClick={() => {
+                                                   copyObjToAnotherBucket(obj)
+                                               }}>
+                                                CopyToAnotherBucket
                                             </button>
                                         </td>
                                     </tr>
